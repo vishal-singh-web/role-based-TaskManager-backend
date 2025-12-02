@@ -152,7 +152,7 @@ CORS_ORIGIN=http://localhost:3000
 ---
 
 ## Project Structure
-
+```
 role-based-TaskManager-backend/
 ├── routes/
 │ ├── auth.js # Authentication routes
@@ -182,7 +182,7 @@ role-based-TaskManager-backend/
 ├── .env # Environment variables (not committed)
 ├── package.json # Dependencies & scripts
 └── README.md # This file
-
+```
 
 
 ---
