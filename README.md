@@ -1,154 +1,78 @@
-# Role-Based TaskManager
+# Role-Based TaskManager Backend
 
-> A simple yet effective task management app with two user roles: **User** (sees only their own tasks) and **Admin** (sees all tasks across all users). Built with React + Node.js/Express + MongoDB.
+> Node.js/Express REST API for Role-Based TaskManager. Handles JWT authentication, role-based task filtering, and MongoDB database operations.
 
-**Live Demo:** [role-based-task-manager.vercel.app](https://role-based-task-manager.vercel.app)
+**Deployed on:** Render
 
 ---
 
 ## Table of Contents
 
 - [About](#about)
-- [Quick Start (Demo)](#quick-start-demo)
-- [How It Works](#how-it-works)
-- [User Roles](#user-roles)
+- [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Available Scripts](#available-scripts)
 - [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
+- [Role-Based Task Filtering](#role-based-task-filtering)
 - [Deployment](#deployment)
-- [Backend Repository](#backend-repository)
+- [Frontend Repository](#frontend-repository)
 - [Author](#author)
 
 ---
 
 ## About
 
-Role-Based TaskManager demonstrates a **simple but practical role-based access control (RBAC)** system:
+Role-Based TaskManager Backend is a **Node.js/Express REST API** that powers the [Role-Based TaskManager](https://github.com/vishal-singh-web/role-based-TaskManager) frontend.
 
-- **Regular Users** can only see and manage their own tasks.
-- **Admin Users** can see and manage all tasks in the system, regardless of who created them.
+It implements:
 
-This is a great portfolio project to showcase understanding of authentication, authorization, and full-stack development.
-
----
-
-## Quick Start (Demo)
-
-Want to try it right now? Use the pre-configured admin account:
-
-| Field | Value |
-|-------|-------|
-| **Email** | `admin@hyperverge.com` |
-| **Password** | `admin123` |
-
-1. Go to https://role-based-task-manager.vercel.app
-2. Click **Login**
-3. Enter the credentials above
-4. You'll see **all tasks** from all users in the system
-
-**Want to test as a regular user?**  
-Create a new account on the signup page. Regular users will only see their own tasks.
+- **JWT-based authentication** for secure login/signup
+- **Role-based access control** (User vs Admin)
+- **Task filtering** based on user role
+- **MongoDB Atlas** integration with Mongoose schemas
+- **CORS** for cross-origin requests from the React frontend
 
 ---
 
-## How It Works
+## Features
 
-1. User registers or logs in with email and password.
-2. Backend returns a JWT token and the user's role (`"user"` or `"admin"`).
-3. Frontend stores the token and role in localStorage.
-4. When fetching tasks:
-   - **User role**: Backend returns only that user's tasks.
-   - **Admin role**: Backend returns all tasks from all users.
-5. Frontend conditionally renders UI based on the role.
+✅ **Authentication**
+- User registration with default role `"user"`
+- Login with JWT token generation
+- Password encryption with bcryptjs
+- Protected routes with JWT verification middleware
 
----
+✅ **Role-Based Task Management**
+- Users see only their own tasks
+- Admins see all tasks from all users
+- Users can only edit/delete their own tasks
+- Admins can edit/delete any task
 
-## User Roles
+✅ **Task Operations**
+- Create tasks with title, description, status, and priority
+- Fetch tasks (filtered by role)
+- Update tasks
+- Delete tasks
 
-### User Role
-
-- Can create new tasks.
-- Can only see **their own tasks**.
-- Can only edit/delete **their own tasks**.
-- Cannot access admin features.
-- Cannot see tasks created by other users.
-
-### Admin Role
-
-- Can see **all tasks** in the system (from all users).
-- Can edit or delete any task.
-- Has full visibility into the platform.
-- Pre-configured admin account: `admin@hyperverge.com` / `admin123`
+✅ **Pre-Seeded Admin Account**
+- Email: `admin@hyperverge.com`
+- Password: `admin123`
+- Ready for testing and demo purposes
 
 ---
 
 ## Tech Stack
 
-### Frontend
-
-- **React** (Create React App)  
-- **JavaScript (ES6+)**  
-- **CSS / Bootstrap (or your styling choice)**  
-- **Fetch API** for HTTP requests  
-- **localStorage** for token and user data persistence  
-
-### Backend
-
-- **Node.js**  
-- **Express.js**  
-- **MongoDB Atlas**  
-- **Mongoose** (ODM)  
-- **JWT (jsonwebtoken)**  
-- **bcryptjs** (password hashing)  
-- **CORS & dotenv**  
-
----
-
-## Project Structure
-
-### Frontend
-```
-role-based-TaskManager/
-├── public/
-│ └── index.html
-├── src/
-│ ├── components/
-│ │ ├── Navbar.js # Nav with logout/user info
-│ │ ├── TaskList.js # Display tasks based on role
-│ │ ├── TaskForm.js # Create task form
-│ │ └── PrivateRoute.js # Protected route wrapper (optional)
-│ ├── pages/
-│ │ ├── Login.js # Login page
-│ │ ├── Signup.js # Registration page
-│ │ └── Dashboard.js # Main task view (filtered by role)
-│ ├── App.js # Main app + routing
-│ ├── index.js # Entry point
-│ └── index.css # Global styles
-├── package.json
-└── README.md
-```
-
-### Backend
-
-See: [role-based-TaskManager-backend](https://github.com/vishal-singh-web/role-based-TaskManager-backend)
-```
-role-based-TaskManager-backend/
-├── routes/
-│ ├── auth.js # /api/auth/signup, /api/auth/login
-│ └── tasks.js # /api/tasks (role-based filtering)
-├── models/
-│ ├── User.js # User schema with role field
-│ └── Task.js # Task schema with userId field
-├── middleware/
-│ └── auth.js # JWT verification middleware
-├── index.js # Server entry point
-├── .env # (not committed) MongoDB URI, JWT_SECRET, etc.
-├── package.json
-└── README.md
-```
+- **Node.js** – JavaScript runtime
+- **Express.js** – Web framework
+- **MongoDB Atlas** – Cloud database
+- **Mongoose** – ODM for MongoDB
+- **JWT (jsonwebtoken)** – Authentication tokens
+- **bcryptjs** – Password hashing
+- **CORS** – Cross-origin resource sharing
+- **dotenv** – Environment variable management
 
 ---
 
@@ -157,48 +81,52 @@ role-based-TaskManager-backend/
 ### Prerequisites
 
 - Node.js (v14+)
-- npm or yarn
-- Backend running (local or deployed)
+- npm package manager
+- MongoDB Atlas account (free tier available)
+- Git for version control
 
 ### Installation
 
 1. **Clone the repository**
 
-git clone https://github.com/vishal-singh-web/role-based-TaskManager.git
-cd role-based-TaskManager
+git clone https://github.com/vishal-singh-web/role-based-TaskManager-backend.git
+cd role-based-TaskManager-backend
 
-text
+
 
 2. **Install dependencies**
 
 npm install
 
-3. **Create `.env` file**
-
-In the project root, create a `.env` file:
-
-REACT_APP_API_URL=http://localhost:5000
 
 
-For production (Vercel):
+3. **Create `.env` file** in root directory
 
-REACT_APP_API_URL=https://your-backend-on-render.onrender.com
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster0.mongodb.net/rolebasedtaskmanager?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_key_here
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:3000
 
-4. **Run locally**
+
+
+4. **Start the server**
 
 npm start
 
 
-Open http://localhost:3000 in your browser.
 
----
+Server runs at:
 
-## Available Scripts
+http://localhost:5000
 
-- `npm start` – Runs dev server at http://localhost:3000
-- `npm test` – Runs tests in watch mode
-- `npm run build` – Builds optimized production bundle
-- `npm run eject` – Ejects Create React App config (one-way operation)
+
+
+For development with auto-reload:
+
+npm run dev
+
+
 
 ---
 
@@ -206,32 +134,77 @@ Open http://localhost:3000 in your browser.
 
 Create a `.env` file in the root directory:
 
-REACT_APP_API_URL=http://localhost:5000
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster0.mongodb.net/rolebasedtaskmanager?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_key_here
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:3000
 
-text
+
 
 **Important:**
-- Never commit `.env` to Git.
-- Add `.env` to `.gitignore`.
-- On Vercel, set this as an environment variable in project settings.
+- Never commit `.env` to Git
+- Add `.env` to `.gitignore`
+- `MONGODB_URI`: Get from MongoDB Atlas connection string
+- `JWT_SECRET`: Use a strong random string
+- `CORS_ORIGIN`: Frontend URL (localhost for dev, Vercel URL for prod)
 
-The frontend will use this URL to make API requests like:
+---
 
-fetch(${process.env.REACT_APP_API_URL}/api/auth/login, {...})
-fetch(${process.env.REACT_APP_API_URL}/api/fetchtasks, {...})
+## Project Structure
+
+role-based-TaskManager-backend/
+├── routes/
+│ ├── auth.js # Authentication routes
+│ │ ├── POST /api/auth/signup
+│ │ └── POST /api/auth/login
+│ └── tasks.js # Task routes (role-based filtering)
+│ ├── GET /api/tasks/fetchtasks
+│ ├── POST /api/task/addtask
+│ ├── PUT /api/tasks/updatetasks/:id
+│ └── DELETE /api/tasks/delettask/:id
+├── models/
+│ ├── User.js # User schema
+│ │ ├── name (string)
+│ │ ├── email (string, unique)
+│ │ ├── password (string, hashed)
+│ │ └── role (string: "user" or "admin", default: "user")
+│ └── Task.js # Task schema
+│ ├── title (string)
+│ ├── description (string)
+│ ├── status (string)
+│ ├── priority (string)
+│ ├── userId (ObjectId, reference to User)
+│ └── createdAt, updatedAt (timestamps)
+├── middleware/
+│ └── auth.js # JWT verification middleware
+├── index.js # Server entry point
+├── .env # Environment variables (not committed)
+├── package.json # Dependencies & scripts
+└── README.md # This file
+
 
 
 ---
 
 ## API Endpoints
 
-All responses include `success: true/false` and return data or error messages.
+### Base URL
 
-### Auth Routes
+http://localhost:5000
+
+
+
+(Production: `https://your-role-based-backend.onrender.com`)
+
+---
+
+### Authentication Routes
 
 #### POST /api/auth/signup
 
-- Register a new user (default role: `"user"`).
+Register a new user (default role: `"user"`).
+
 - **Body:**
 {
 "name": "John Doe",
@@ -239,7 +212,7 @@ All responses include `success: true/false` and return data or error messages.
 "password": "securepassword"
 }
 
-text
+
 
 - **Response (success):**
 {
@@ -254,14 +227,19 @@ text
 }
 
 
+
+---
+
 #### POST /api/auth/login
 
-- Login and get JWT token + user info including role.
+Login with email and password.
+
 - **Body:**
 {
 "email": "admin@hyperverge.com",
 "password": "admin123"
 }
+
 
 
 - **Response (success):**
@@ -276,22 +254,29 @@ text
 }
 }
 
+
+
 ---
 
 ### Task Routes (Protected)
 
-All task endpoints require:
+All task endpoints require JWT token in header:
 
-token: <token>
+token:  <token>
 
-text
+
 
 #### GET /api/tasks/fetchtasks
 
-Fetches tasks based on user role:
+Fetch tasks based on user role.
 
-- **User role**: Returns only that user's tasks.
-- **Admin role**: Returns **all tasks from all users**.
+- **Role: User** → Returns only that user's tasks
+- **Role: Admin** → Returns all tasks from all users
+
+- **Headers:**
+token:  <token>
+
+
 
 - **Response (success):**
 {
@@ -301,28 +286,37 @@ Fetches tasks based on user role:
 "_id": "task_id",
 "title": "My Task",
 "description": "Task details",
-"status":" status",
-"priority":" priority",
+"status": "pending",
+"priority": "high",
 "userId": "creator_user_id",
-"createdAt": "2025-01-01T00:00:00.000Z"
+"createdAt": "2025-01-01T00:00:00.000Z",
+"updatedAt": "2025-01-01T00:00:00.000Z"
 }
 ]
 }
 
 
+
+---
+
 #### POST /api/task/addtask
 
-Create a new task (creator's userId is auto-assigned).
+Create a new task (userId auto-assigned from token).
+
+- **Headers:**
+token:  <token>
+
+
 
 - **Body:**
 {
 "title": "New Task",
 "description": "Task description",
-"status":"your status",
-"priority":"your priority"
+"status": "pending",
+"priority": "high"
 }
 
-text
+
 
 - **Response (success):**
 {
@@ -331,28 +325,35 @@ text
 "_id": "new_task_id",
 "title": "New Task",
 "description": "Task description",
-"status":"your status",
-"priority":"your priority",
+"status": "pending",
+"priority": "high",
 "userId": "current_user_id",
 "createdAt": "2025-01-01T00:00:00.000Z"
 }
 }
 
-text
+
+
+---
 
 #### PUT /api/tasks/updatetasks/:id
 
-Update a task (must be task creator or admin).
+Update a task (creator or admin only).
+
+- **Headers:**
+token:  <token>
+
+
 
 - **Body:**
 {
 "title": "Updated Title",
-"description": "Updated description".
-"status":"updated status",
-"priority":"updated priority"
+"description": "Updated description",
+"status": "completed",
+"priority": "medium"
 }
 
-text
+
 
 - **Response (success):**
 {
@@ -361,17 +362,24 @@ text
 "_id": "task_id",
 "title": "Updated Title",
 "description": "Updated description",
-"status":"updated status",
-"priority":"updated priority",
+"status": "completed",
+"priority": "medium",
 "updatedAt": "2025-01-01T00:00:00.000Z"
 }
 }
 
-text
+
+
+---
 
 #### DELETE /api/tasks/delettask/:id
 
-Delete a task (must be task creator or admin).
+Delete a task (creator or admin only).
+
+- **Headers:**
+token:  <token>
+
+
 
 - **Response (success):**
 {
@@ -379,75 +387,124 @@ Delete a task (must be task creator or admin).
 "message": "Task deleted successfully"
 }
 
-text
+
 
 ---
 
-## Deployment
+## Role-Based Task Filtering
 
-### Frontend (Vercel)
+### How It Works
 
-1. **Commit and push to GitHub**
+1. **User makes request** to GET `/api/tasks/fetchtasks`
+2. **Backend verifies JWT** and extracts userId and role
+3. **Query logic:**
+   - If role is `"user"` → `Task.find({ userId: req.user._id })`
+   - If role is `"admin"` → `Task.find({})` (all tasks)
+4. **Response** contains filtered tasks
+
+### Example Scenarios
+
+**Scenario 1: Regular User logs in**
+- Gets all their own tasks only
+- Cannot see tasks from other users
+- API returns tasks where `userId === current_user._id`
+
+**Scenario 2: Admin logs in**
+- Gets all tasks from all users
+- Can see who created each task (userId field)
+- API returns all tasks in database
+
+---
+
+## Deployment on Render
+
+1. **Push code to GitHub**
 
 git add .
-git commit -m "Deploy role-based TaskManager"
+git commit -m "Initial backend commit"
 git push origin main
 
-text
 
-2. **Deploy on Vercel**
 
-- Go to https://vercel.com
-- Click **New Project**
-- Import your GitHub repository
-- Set environment variable:
-  - Key: `REACT_APP_API_URL`
-  - Value: `https://your-role-based-backend.onrender.com`
-- Click **Deploy**
+2. **On Render:**
 
-Your live app will be available at:
+- Go to https://render.com
+- Click **New** → **Web Service**
+- Connect your GitHub repository
+- **Environment:** Node
+- **Build Command:** `npm install`
+- **Start Command:** `npm start`
+- Add environment variables:
+  - `MONGODB_URI` (your Atlas connection string)
+  - `JWT_SECRET` (strong random string)
+  - `CORS_ORIGIN` (your Vercel frontend URL)
+  - `NODE_ENV` = `production`
+- Click **Create Web Service**
 
-https://role-based-task-manager.vercel.app
+3. **Get your backend URL**, e.g.:
 
-text
+https://role-based-taskmanager-backend.onrender.com
 
-### Backend
 
-Deploy separately on Render, Railway, or Heroku. Once deployed, get the backend URL and update the frontend's `REACT_APP_API_URL` environment variable.
 
----
+4. **Update frontend `.env`** on Vercel:
 
-## Testing the App
+REACT_APP_API_URL=https://role-based-taskmanager-backend.onrender.com
 
-### As Admin
-
-1. Go to login page
-2. Enter:
-   - Email: `admin@hyperverge.com`
-   - Password: `admin123`
-3. You'll see **all tasks** in the system
-
-### As Regular User
-
-1. Go to signup page
-2. Create a new account
-3. Log in with your credentials
-4. You'll only see **your own tasks**
 
 ---
 
-## Backend Repository
+## Testing with curl
 
-Backend source code and setup:  
-[`role-based-TaskManager-backend`](https://github.com/vishal-singh-web/role-based-TaskManager-backend)
+### Sign Up
 
-The backend:
+curl -X POST http://localhost:5000/api/auth/signup
+-H "Content-Type: application/json"
+-d '{
+"name": "Test User",
+"email": "test@example.com",
+"password": "testpass123"
+}'
 
-- Implements JWT authentication.
-- Stores users with roles (`"user"` or `"admin"`).
-- Filters tasks based on the requesting user's role.
-- Provides all REST endpoints for this frontend.
-- Pre-seeded with admin account: `admin@hyperverge.com` / `admin123`
+
+
+### Login (Admin)
+
+curl -X POST http://localhost:5000/api/auth/login
+-H "Content-Type: application/json"
+-d '{
+"email": "admin@hyperverge.com",
+"password": "admin123"
+}'
+
+
+
+### Fetch Tasks (with token)
+
+curl -X GET http://localhost:5000/api/tasks/fetchtasks
+-H "token:  YOUR_TOKEN_HERE"
+
+
+
+### Create Task (with token)
+
+curl -X POST http://localhost:5000/api/task/addtask
+-H "token:  YOUR_TOKEN_HERE"
+-H "Content-Type: application/json"
+-d '{
+"title": "My Task",
+"description": "Task details",
+"status": "pending",
+"priority": "high"
+}'
+
+
+---
+
+## Frontend Repository
+
+**Role-Based TaskManager Frontend:**  
+[github.com/vishal-singh-web/role-based-TaskManager](https://github.com/vishal-singh-web/role-based-TaskManager)
 
 ---
 
@@ -456,7 +513,7 @@ The backend:
 **Vishal Singh**
 
 - GitHub: [@vishal-singh-web](https://github.com/vishal-singh-web)
-- Portfolio: [vishal-singh-web.github.io](https://vishal-singh-web.github.io)
+- LinkedIn: [linkedin.com/in/vishal-singh-web](https://linkedin.com/in/vishal-singh-web)
 
 ---
 
