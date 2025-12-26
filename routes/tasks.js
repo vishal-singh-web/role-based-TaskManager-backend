@@ -51,7 +51,7 @@ router.put('/updatetask/:id', fetchuser, async (req, res) => {
     if (!task) {
       return res.status(404).send('Not Found');
     }
-    if (task.user.toString() !== req.user.id) {
+    if (req.user.role !== 'admin' && task.user.toString() !== req.user.id) {
       return res.status(401).send('Not Allowed');
     }
 
@@ -69,7 +69,7 @@ router.delete('/deletetask/:id', fetchuser, async (req, res) => {
     if (!task) {
       return res.status(404).send('Not Found');
     }
-    if (task.user.toString() !== req.user.id) {
+    if (req.user.role !== 'admin' && task.user.toString() !== req.user.id) {
       return res.status(401).send('Not Allowed');
     }
 
@@ -85,7 +85,7 @@ router.get('/fetchtasks', fetchuser, async (req, res) => {
   try {
     let tasks = {};
      if (req.user.role === 'admin') {
-      tasks = await Tasks.find({});
+      tasks = await Tasks.find({}).populate('user', 'name email');
     } else {
       tasks = await Tasks.find({ user: req.user.id });
     }
