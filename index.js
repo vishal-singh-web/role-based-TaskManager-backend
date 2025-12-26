@@ -9,7 +9,9 @@ connectMongo();
 const app = express();
 
 app.use(json());
-app.use(cors());
+app.use(cors({
+  origin: ['https://role-based-task-manager.vercel.app', 'http://localhost:3000']
+}));
 app.use('/api/auth',authRoutes);
 app.use('/api/tasks',tasksRoutes);
 
