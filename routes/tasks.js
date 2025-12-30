@@ -15,7 +15,6 @@ const validate = validations => {
 
 router.post('/addtask', fetchuser, validate([
   body('title', 'Title cannot be less than 3 characters').isLength({ min: 3 }),
-  body('description', 'Description cannot be less than 5 characters').isLength({ min: 5 }),
 ]), async (req, res) => {
   try {
     const { title, description, priority, status } = req.body;
